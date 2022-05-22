@@ -23,20 +23,10 @@ public:
     ListNode* middleNode(ListNode* head) {
         int n = checkSize(head);
         ListNode* temp = head;
-        if(n % 2 != 0) {
-            int i = 0;
-            while(i < n/2) {
-                temp = temp -> next;
-                i++;
-            }
-        }
-        else
-        {
-            int i = 0;
-            while(i < n/2) {
-                temp = temp -> next;
-                i++;
-            }
+        int i = 0;
+        while(i < n/2) {
+            temp = temp -> next;
+            i++;
         }
         return temp;
     }
