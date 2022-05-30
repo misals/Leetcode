@@ -4,14 +4,14 @@ public:
         if(n <= 0) {
             return false;
         }
-        while(n > 0) {
-            if(n == 1) {
-                return true;
-            } else if(n % 2 != 0) {
-                return false;
+        int cnt = 0;
+        for(int i = 0; i < 32; i++) {
+            if(n & (1 << i)) {
+                cnt++;
             }
-            n /= 2;
         }
-        return true;
+        if(cnt == 1)
+            return true;
+        return false;
     }
 };
