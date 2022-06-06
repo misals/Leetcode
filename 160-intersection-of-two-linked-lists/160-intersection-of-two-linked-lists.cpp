@@ -9,24 +9,15 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        ListNode* intersectionNode = NULL;
-        
-        while(headA != NULL) {
-            ListNode* temp = headB;
-            bool flag = false;
-            while(temp != NULL) {
-                if(headA == temp) {
-                    intersectionNode = headA;
-                    flag = true;
-                    break;
-                }
-                temp = temp -> next;
-            }
-            if(flag) {
-                break;
-            }
-            headA = headA -> next;
+        if(headA == NULL or headB == NULL) {
+            return NULL;
         }
-        return intersectionNode;
+        ListNode *a = headA;
+        ListNode *b = headB; 
+        while(a != b) {
+            a = a == NULL?headB : a -> next;
+            b = b == NULL?headA : b -> next;
+        }
+        return a;
     }
 };
