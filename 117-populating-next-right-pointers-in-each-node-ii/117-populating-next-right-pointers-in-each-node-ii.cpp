@@ -18,35 +18,35 @@ public:
 
 class Solution {
 public:
-    void populate(Node* root) {
+    Node* connect(Node* root) {
+        Node* head = root;
         if(root == NULL) {
-            return;
+            return NULL;
         }
         queue<Node*> q;
         q.push(root);
+        
         while(!q.empty()) {
             int n = q.size();
+            
             for(int i = 0; i < n; i++) {
-                auto temp = q.front();
+                auto node = q.front();
                 q.pop();
-                if(temp -> left != NULL) {
-                    q.push(temp -> left);
+                
+                if(node -> left != NULL) {
+                    q.push(node -> left);
                 }
-                if(temp -> right != NULL) {
-                    q.push(temp -> right);
+                if(node -> right != NULL) {
+                    q.push(node -> right);
                 }
                 if(i == n - 1) {
-                    temp -> next = NULL;
+                    node -> next = NULL;
                 } else {
-                    auto currNext = q.front();
-                    temp -> next = currNext;
+                    auto temp = q.front();
+                    node -> next = temp;
                 }
             }
         }
-    }
-    
-    Node* connect(Node* root) {
-        populate(root);
-        return root;
+        return head;
     }
 };
