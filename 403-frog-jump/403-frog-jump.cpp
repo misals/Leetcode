@@ -1,40 +1,45 @@
 class Solution {
 public:
-    int dp[2001][2001];
-    bool solve(vector<int>& stones, int k, int i, unordered_map<int, int> &mp) {
-        if(k <= 0) {
-            return false;
-        }
-        if(mp.find(k + stones[i-1]) == mp.end()) {
-            return false;
-        } else {
-            i = mp[k + stones[i-1]];
-        }
-        if(dp[i][k] != -1) {
-            return dp[i][k];
-        }
-        if(i == stones.size() - 1) {
-            return true;
-        }
-        
-        dp[i][k] = solve(stones, k - 1, i+1, mp) || solve(stones, k, i+1, mp) || solve(stones, k +1, i+1, mp);
-        return dp[i][k];
-    }
-    
     bool canCross(vector<int>& stones) {
-        int i = 1; 
-        int k = 1;
-        memset(dp, -1, sizeof(dp));
+        map<int,int> mp;
+        int n = stones.size();
         
-        unordered_map<int, int> mp;
-        for(int i = 0; i < stones.size(); i++) {
-            mp.insert({stones[i], i});
+        for(int i = 0; i < n; i++) {
+            mp[stones[i]] = i;
         }
-        
+        vector<unordered_set<int>> jump(n, unordered_set<int>());
         if(stones[1] != 1) {
             return false;
         }
+        if(n == 2) {
+            return true;
+        }
+        jump[1].insert(1);
         
-        return solve(stones, k, i, mp);
+        for(int i = 1; i < n; i++) {
+            unordered_set<int> possible;
+            
+            for(auto it : jump[i]) {
+                if(it > 1) {
+                    possible.insert(stones[i] + it - 1);
+                }
+                possible.insert(stones[i] + it);
+                possible.insert(stones[i] + it + 1);
+            }
+            
+            for(auto it : possible) {
+                if(mp.find(it) == mp.end()) {
+                    continue;
+                }
+                
+                int index = mp[it];
+                if(index == n - 1) {
+                    return true;
+                }
+                int jumpLen = it - stones[i];
+                jump[index].insert(jumpLen);
+            }
+        }
+        return false;
     }
 };
