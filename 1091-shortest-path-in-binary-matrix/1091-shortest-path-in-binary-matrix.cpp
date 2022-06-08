@@ -8,36 +8,39 @@ public:
     }
     
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        int n = grid.size();
         if(grid[0][0] == 1) {
             return -1;
         }
-        vector<vector<int>> dir{{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
+        int n = grid.size();
+        int ans = 0;
+        
         queue<pair<int,int>> q;
         q.push({0,0});
-        grid[0][0] = 1;
-        int ans = 0;
+        
+        int di[8] = {0, -1, -1, -1, 0, 1, 1, 1};
+        int dj[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
         
         while(!q.empty()) {
             int sz = q.size();
             ans++;
+            
             for(int i = 0; i < sz; i++) {
-                pair<int,int> p = q.front();
+                int x = q.front().first;
+                int y = q.front().second;
+                
                 q.pop();
-                int x = p.first;
-                int y = p.second;
                 
                 if(x == n - 1 && y == n - 1) {
                     return ans;
                 }
                 
-                for(int j = 0; j < dir.size(); j++) {
-                    int a = x + dir[j][0];
-                    int b = y + dir[j][1];
+                for(int j = 0; j < 8; j++) {
+                    int a = x + di[j];
+                    int b = y + dj[j];
                     
-                    if(isValid(a, b, n, grid) == true) {
-                        q.push({a,b});
+                    if(isValid(a, b, n, grid)) {
                         grid[a][b] = 1;
+                        q.push({a,b});
                     }
                 }
             }
