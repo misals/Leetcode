@@ -1,22 +1,24 @@
 class Solution {
 public:
-    void generateAll(string str, vector<string> &res, int n, int open, int close) {
+    void generateAll(int n, int open, int close, vector<string> &ans, string str) {
         if(open == n && close == n) {
-            res.push_back(str);
-            return;
-        } 
+            ans.push_back(str);
+        }
         if(open < n) {
-            generateAll(str + "(", res, n, open + 1, close);
+            generateAll(n, open + 1, close, ans, str + '(');
         }
         if(close < open) {
-            generateAll(str + ")", res, n, open, close + 1);
+            generateAll(n, open, close + 1, ans, str + ')');
         }
     }
+    
     vector<string> generateParenthesis(int n) {
-        vector<string> res;
         int open = 0;
         int close = 0;
-        generateAll("", res, n, open, close);
-        return res;
+        vector<string> ans;
+        
+        generateAll(n, open, close, ans, "");
+        
+        return ans;
     }
 };
