@@ -10,24 +10,23 @@
  */
 class Solution {
 public:
-    int checkSize(ListNode* head) {
-        ListNode* temp = head;
+    int findSize(ListNode* head) {
         int cnt = 0;
-        while(temp != NULL) {
+        while(head != NULL) {
             cnt++;
-            temp = temp -> next;
+            head = head -> next;
         }
         return cnt;
     }
     
     ListNode* middleNode(ListNode* head) {
-        int n = checkSize(head);
-        ListNode* temp = head;
+        int n = findSize(head);
+        
         int i = 0;
         while(i < n/2) {
-            temp = temp -> next;
+            head = head -> next;
             i++;
         }
-        return temp;
+        return head;
     }
 };
