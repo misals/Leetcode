@@ -1,25 +1,29 @@
 class Solution {
 public:
-    void helper(int ind, vector<int> &candidates, int target, vector<vector<int>> &res, int n,vector<int> vec ) {
-        if(ind == n) {
+    void uniqueComb(int ind, vector<int>& candidates, int target, vector<vector<int>> &ans, vector<int> &temp) {
+        if(ind == candidates.size()) {
             if(target == 0) {
-                res.push_back(vec); 
+                ans.push_back(temp);
             }
             return;
         }
-        if(candidates[ind] <= target) {
-            vec.push_back(candidates[ind]);
-            helper(ind, candidates, target - candidates[ind], res, n, vec);
-            vec.pop_back();
-        } 
-        helper(ind + 1, candidates, target, res, n, vec);
+        if(target - candidates[ind] >= 0) {
+            target -= candidates[ind];
+            temp.push_back(candidates[ind]);
+            uniqueComb(ind, candidates, target, ans, temp);
+            temp.pop_back();
+            target += candidates[ind];
+        }
+        uniqueComb(ind + 1, candidates, target, ans, temp);
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        int n = candidates.size();
-        vector<vector<int>> res;
-        vector<int> vec;
-        helper(0, candidates, target, res, n, vec);
-        return res;
+        vector<vector<int>> ans;
+        vector<int> temp;
+        
+        uniqueComb(0, candidates, target, ans, temp);
+        
+        return ans;
+        
     }
 };
