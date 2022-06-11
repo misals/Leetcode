@@ -11,24 +11,24 @@ public:
         mp['8'] = "tuv";
         mp['9'] = "wxyz";
         
-        int n = digits.length();
+        int n = digits.size();
         queue<pair<int, string>> q;
-        q.push({0,""});
+        q.push({0, ""});
         vector<string> ans;
         
         while(!q.empty()) {
             auto it = q.front();
             q.pop();
             int i = it.first;
-            string str = it.second;
+            string s = it.second;
             
-            for(auto c : mp[digits[i]]) {
-                string s = str;
-                s += c;
-                if(i + 1 == n) {
-                    ans.push_back(s);
+            for(char c : mp[digits[i]]) {
+                string str = s;
+                str += c;
+                if(i == n - 1) {
+                    ans.push_back(str);
                 } else {
-                    q.push({i+1, s});
+                    q.push({i+1, str});
                 }
             }
         }
