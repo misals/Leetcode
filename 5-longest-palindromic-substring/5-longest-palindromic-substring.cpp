@@ -2,13 +2,7 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         int n = s.size();
-        int dp[n][n];
-        
-        for(int i = 0; i < n; i++) {
-            for(int j = i; j < n; j++) {
-                dp[i][j] = 0;
-            }
-        }
+        vector<vector<int>> dp(n, vector<int> (n,0));
         
         for(int diff = 0; diff < n; diff++) {
             for(int i = 0, j = diff; j < n; i++, j++) {
@@ -29,22 +23,19 @@ public:
                 }
             }
         }
-        int x, y;
-        int maxi = INT_MIN;
+        int start = 0;
+        int end = 0;
+        int maxi = 0;
         for(int i = 0; i < n; i++) {
             for(int j = i; j < n; j++) {
                 if(dp[i][j] > maxi) {
                     maxi = dp[i][j];
-                    x = i;
-                    y = j;
+                    start = i;
+                    end = j;
                 }
             }
         }
-        cout << x << " " << y  << " " << maxi<< endl;
-        string ans = s.substr(x, y - x + 1);
-        return ans;
+        
+        return s.substr(start, end - start + 1);
     }
 };
-
-
-
