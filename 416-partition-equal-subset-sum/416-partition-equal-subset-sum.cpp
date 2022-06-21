@@ -1,33 +1,29 @@
 class Solution {
 public:
+    bool fun(int ind, int tar, vector<int> &nums, vector<vector<int>> &dp) {
+        if(tar == 0) {
+            return true;
+        }
+        if(ind == 0) return nums[ind] == tar;
+        
+        if(dp[ind][tar] != -1) return dp[ind][tar];
+        
+        bool notPick = fun(ind - 1, tar, nums, dp);
+        bool pick = false;
+        if(tar >= nums[ind]) {
+            pick = fun(ind - 1, tar - nums[ind], nums, dp);
+        }
+        return dp[ind][tar] = pick | notPick;
+    }
+    
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
         int sum = 0;
-        for(int i = 0; i < n; i++) {
-            sum += nums[i];
-        }
-        if(sum % 2 != 0 || n == 1) {
-            return false;
-        }
-        if(n == 2) {
-            return nums[0] == nums[1];
-        }
-        int k = sum / 2;
-        vector<bool> prev(k + 1, 0), curr(k + 1, 0);
-        prev[0] = prev[nums[0]] = true;
-        curr[0] = true;
+        for(int i = 0; i < n; i++) sum += nums[i];
+        if(sum % 2) return false;
         
-        for(int ind = 1; ind < n; ind++) {
-            for(int target = 1; target <= k; target++) {
-                bool notPick = prev[target];
-                bool pick = false;
-                if(target >= nums[ind]) {
-                    pick = prev[target - nums[ind]];
-                }
-                curr[target] = pick | notPick;
-            }
-            prev = curr;
-        }
-        return prev[k];
+        vector<vector<int>> dp(n, vector<int> (sum/2+1, -1));
+        
+        return fun(n - 1, sum / 2, nums, dp);
     }
 };
