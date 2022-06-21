@@ -2,22 +2,27 @@ class Solution {
 public:
     bool isHappy(int n) {
         set<int> s;
-        int sum = 0;
+        bool flag = false;
         while(1) {
-            sum = 0;
+            int num = 0;
             while(n != 0) {
-                sum += (n % 10) * (n % 10);
-                n = n /10;
+                int rem = n % 10;
+                num += (rem*rem);
+                n /= 10;
             }
-            if(sum == 1) {
-                return true;
+            if(num == 1) {
+                flag = true;
+                break;
+            } else if(s.find(num) != s.end()) {
+                break;
+            } else {
+                s.insert(num);
+                n = num;
             }
-            else if(s.find(sum) != s.end()) {
-                return false;
-            } 
-            s.insert(sum);
-            n = sum;
         }
-        return true;
+        if(flag) {
+            return true;
+        }
+        return flag;
     }
 };
