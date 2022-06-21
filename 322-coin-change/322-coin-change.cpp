@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int dp[10001];
-    
-    int solve(vector<int>& coins, int amount) {
-        int ans=10001;
-
-        if(amount==0)
-            return 0;
-
-        if(dp[amount]!=-1)
-            return dp[amount];
-
-        for(int i=0;i<coins.size();i++) {
-            if(amount-coins[i]>=0)
-                ans=min(ans,solve(coins,amount-coins[i])+1);
+    int f(int ind, int tar, vector<int> &coins, vector<vector<int>> &dp) {
+        if(ind == 0) {
+            if(tar % coins[0] == 0) return tar / coins[0];
+            return 1e9;
         }
-        return dp[amount]=ans;
+        if(dp[ind][tar] != -1) return dp[ind][tar];
+        int notPick = f(ind - 1, tar, coins, dp);
+        int pick = 1e9;
+        if(tar >= coins[ind]) {
+            pick = 1 + f(ind, tar - coins[ind], coins, dp);
+        }
+        
+        return dp[ind][tar] = min(pick, notPick);
     }
     
     int coinChange(vector<int>& coins, int amount) {
-        memset(dp,-1,sizeof(dp));
-        int res = solve(coins,amount);
-        if(res == 10001)
-            return -1;
-        return res;
+        int n = coins.size();
+        vector<vector<int>> dp(n, vector<int> (amount+1, -1));
+        int ans = f(n-1, amount, coins, dp);
+        
+        if(ans >= 1e9) return -1;
+        
+        return ans;
     }
 };
