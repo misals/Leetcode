@@ -16,7 +16,7 @@ public:
             } else if(ladders > 0) {
                 if(pq.size() > 0) {
                     int num = pq.top();
-                    if(num > diff) {
+                    if(num >= diff) {
                         bricks += num;
                         pq.pop();
                         pq.push(diff);
