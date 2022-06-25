@@ -3,30 +3,19 @@ public:
     bool checkPossibility(vector<int>& nums) {
         int cnt = 0;
         int n = nums.size();
-        int maxi = nums[0];
         
-        for(int i = 0; i < n - 1; i++) {
-            if(nums[i] > nums[i+1]) {
-                if(i + 2 < n) {
-                    if(nums[i] < nums[i+2]) {
-                        nums[i+1] = nums[i];
-                    }
-                    else if(nums[i] > nums[i+2]) {
-                        nums[i] = nums[i+1];
-                    }
-                    else {
-                        nums[i+1] = nums[i];
-                    }
+        for(int i = 1; i < n; i++) {
+            if(nums[i] < nums[i-1] ) {
+                if(cnt == 1) 
+                    return false;
+                cnt++;
+                if(i < 2 || nums[i-2] <= nums[i]) {
+                    nums[i-1] = nums[i];
                 }
                 else {
-                    nums[i+1] = nums[i];
+                    nums[i] = nums[i-1];
                 }
-                break;
             }
-        }
-        for(int i = 0; i < n - 1; i++) {
-            if(nums[i] > nums[i+1])
-                return false;
         }
         return true;
     }
