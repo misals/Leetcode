@@ -11,7 +11,6 @@ public:
             vec.push_back(it.second);
         }
         set<int> st;
-        sort(vec.begin(), vec.end());
         int sz = vec.size();
         int ans = 0;
         
