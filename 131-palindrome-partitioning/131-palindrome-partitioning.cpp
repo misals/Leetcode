@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void generateAll(int ind, string s, vector<string> &path, vector<vector<string>> &res) {
+    void generateAll(int ind, string &s, vector<string> &path, vector<vector<string>> &res) {
         if(ind == s.size()) {
             res.push_back(path);
             return;
@@ -14,7 +14,7 @@ public:
         }
     }
     
-    bool isPalindrome(int start, int end, string s) {
+    bool isPalindrome(int start, int end, string &s) {
         while(start < end) {
             if(s[start++] != s[end--]) {
                 return false;
