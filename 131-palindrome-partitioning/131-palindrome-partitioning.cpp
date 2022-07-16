@@ -1,32 +1,32 @@
 class Solution {
 public:
-    bool isPalindrome(string &s, int l, int r) {
-        while(l <= r) {
-            if(s[l++] != s[r--]) {
+    void generateAll(int ind, string s, vector<string> &path, vector<vector<string>> &res) {
+        if(ind == s.size()) {
+            res.push_back(path);
+            return;
+        }
+        for(int i = ind; i < s.size(); i++) {
+            if(isPalindrome(ind, i, s)) {
+                path.push_back(s.substr(ind, i - ind + 1));
+                generateAll(i + 1, s, path, res);
+                path.pop_back();
+            }
+        }
+    }
+    
+    bool isPalindrome(int start, int end, string s) {
+        while(start < end) {
+            if(s[start++] != s[end--]) {
                 return false;
             }
         }
         return true;
     }
     
-    void palindromePartition(int ind, string &s, vector<vector<string>> &res, vector<string> &str) {
-        if(ind == s.size()) {
-            res.push_back(str);
-            return;
-        }
-        for(int i = ind; i < s.size(); i++) {
-            if(isPalindrome(s, ind, i)) {
-                str.push_back(s.substr(ind, i - ind + 1));
-                palindromePartition(i + 1, s, res, str);
-                str.pop_back();
-            }
-        }
-    }
-    
     vector<vector<string>> partition(string s) {
         vector<vector<string>> res;
-        vector<string> str;
-        palindromePartition(0, s, res, str);
+        vector<string> path;
+        generateAll(0, s, path, res);
         return res;
     }
 };
