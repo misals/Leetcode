@@ -1,21 +1,26 @@
 class Solution {
 public:
     bool checkBipartite(int node, vector<vector<int>>& graph, vector<int> &color) {
-        if(color[node] == -1) color[node] = 1;
+        queue<int> q;
+        color[node] = 1;
+        q.push(node);
         
-        for(auto it : graph[node]) {
-            if(color[it] == -1) {
-                color[it] = 1 - color[node];
-                if(!checkBipartite(it, graph, color)) {
+        while(!q.empty()) {
+            int par = q.front();
+            q.pop();
+            
+            for(auto it : graph[par]) {
+                if(color[it] == -1) {
+                    color[it] = 1 - color[par];
+                    q.push(it);
+                }
+                else if(color[it] == color[par]) {
                     return false;
                 }
             }
-            else if(color[it] == color[node]) {
-                return false;
-            }
         }
         return true;
-    } 
+    }
     
     bool isBipartite(vector<vector<int>>& graph) {
         int v = graph.size();
