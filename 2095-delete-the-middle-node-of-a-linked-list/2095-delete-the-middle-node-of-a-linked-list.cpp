@@ -16,11 +16,10 @@ public:
             return NULL;
         }
         
+        ListNode* prev;
         ListNode* slow = head;
         ListNode* fast = head;
-        ListNode* temp = head;
-        
-        ListNode* prev = NULL;
+        ListNode* res = head;
         
         while(fast != NULL && fast -> next != NULL) {
             prev = slow;
@@ -29,6 +28,6 @@ public:
         }
         prev -> next = slow -> next;
         
-        return temp;
+        return res;
     }
 };
