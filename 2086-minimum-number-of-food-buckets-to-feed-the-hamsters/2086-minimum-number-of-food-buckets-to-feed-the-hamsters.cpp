@@ -14,7 +14,7 @@ public:
                         cnt++;
                     }
                     else {
-                        flag = false;
+                        return -1;
                     }
                 }
                 else {
@@ -30,13 +30,11 @@ public:
                         cnt++;
                     }
                     else {
-                        flag = false;
+                        return -1;
                     }
                 }
             }
         }
-        if(flag == false)
-            return -1;
         return cnt;
     }
 };
