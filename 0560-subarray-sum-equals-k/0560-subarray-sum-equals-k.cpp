@@ -6,11 +6,9 @@ public:
         int cnt = 0;
         map<int, int> mp;
         
-        
+        mp[0] = 1;
         for(int i = 0; i < n; i++) {
             sum += nums[i];
-            
-            if(sum == k) cnt++;
             
             int val = sum - k;
             if(mp.find(val) != mp.end()) {
