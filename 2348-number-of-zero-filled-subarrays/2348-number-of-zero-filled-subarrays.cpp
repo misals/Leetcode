@@ -15,13 +15,8 @@ public:
                     j++;
                     cnt++;
                 }
+                ans += (cnt * (cnt + 1)/ 2);
                 
-                if(cnt == 2) {
-                    ans += 3;
-                }
-                else {
-                    ans += (cnt * (cnt + 1)/ 2);
-                }
                 i = j - 1;
             }
             i++;
