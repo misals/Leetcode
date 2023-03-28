@@ -13,8 +13,7 @@ public:
         long long pick = 1e5;
         
         if(amount >= coins[ind]) {
-            pick = 1 + min(solve(ind, amount - coins[ind], coins, dp),
-                          solve(ind - 1, amount - coins[ind], coins, dp));
+            pick = 1 + solve(ind, amount - coins[ind], coins, dp);
         }
         
         return dp[ind][amount] = min(pick, notPick);
