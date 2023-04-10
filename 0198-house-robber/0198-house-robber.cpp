@@ -4,20 +4,22 @@ public:
     int rob(vector<int>& nums) {
         int n = nums.size();
         
-        vector<int> dp(n, 0);
-        dp[0] = nums[0];
+        int prev1 = nums[0];
+        int prev2;
         
         for(int ind = 1; ind < n; ind++) {
-            int notPick = dp[ind - 1];
+            int notPick = prev1;
             int pick = nums[ind];
             if(ind - 2 >= 0 ) {
-                pick += dp[ind - 2];
+                pick += prev2;
             }
 
-            dp[ind] = max(pick, notPick);
+            int curr = max(pick, notPick);
+            prev2 = prev1;
+            prev1 = curr;
         }
         
         
-        return dp[n-1];
+        return prev1;
     }
 };
