@@ -17,7 +17,6 @@ public:
         q.push({root, {0, -1}});
         
         int ans = 0;
-        int level = 0;
         
         while(!q.empty()) {
             int n = q.size();
@@ -44,9 +43,6 @@ public:
                     }   
                 }
             }
-            
-            //cout << level << " " << ans << endl;
-           // level++;
         }
         return ans;
     }
