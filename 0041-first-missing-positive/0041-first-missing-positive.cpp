@@ -11,7 +11,6 @@ public:
         for(auto &it : mp) {
             v.push_back(it.first);
         }
-        sort(v.begin(), v.end());
         
         int n = v.size();
         for(int i = 0; i < n; i++) {
