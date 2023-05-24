@@ -7,24 +7,25 @@ public:
         for(int i = 0; i < n; i++) {
             v.push_back({nums2[i], nums1[i]});
         }
-        
         sort(v.rbegin(), v.rend());
+        long long sum = 0;
+        long long ans = 0;
+        
         priority_queue<int, vector<int>, greater<int>> pq;
         
-        long long ans = 0;
-        long long sum = 0;
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k - 1; i++) {
+            sum += v[i].second;
+            pq.push(v[i].second);
+        }
+        
+        for(int i = k - 1; i < n; i++) {
             sum += v[i].second;
             pq.push(v[i].second);
             
-            if(pq.size() > k) {
-                sum -= pq.top();
-                pq.pop();
-            }
+            ans = max(ans, v[i].first * sum);
             
-            if(pq.size() == k) {
-                ans = max(ans, sum * v[i].first);
-            }
+            sum -= pq.top();
+            pq.pop();
         }
         return ans;
     }
