@@ -1,23 +1,34 @@
 class Solution {
 public:
-    vector<int> adj[100005];
-    
-    int dfs(int headID, vector<int> &informTime) {
-        int maxi = 0;
-        for(auto it : adj[headID]) {
-            maxi = max(maxi, dfs(it, informTime));
+    int numOfMinutes(int n, int h, vector<int>& m, vector<int>& info) {
+        if(n==1){
+            return 0;
         }
-        return informTime[headID] + maxi;
-    }
-    
-    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
-        
-        for(int i = 0; i < n; i++) {
-            if(manager[i] != -1) {
-                adj[manager[i]].push_back(i);
+        vector<int>adj[n];
+        for(int i=0; i<n; i++){
+            if(m[i]==-1){
+                continue;
+            }
+            else{
+                adj[m[i]].push_back(i);
             }
         }
-        
-        return dfs(headID, informTime);
+        queue<int>q;
+        vector<int>sum(n,0);
+        sum[h]=0;
+        q.push(h);
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            for(auto it: adj[node]){
+                q.push(it);
+                sum[it]=sum[node]+info[node];
+            }
+        }
+        int ans=0;
+        for(int i=0; i<n; i++){
+            ans=max(ans,sum[i]);
+        }
+        return ans;
     }
 };
