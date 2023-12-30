@@ -1,46 +1,41 @@
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> v(2, -1);
         int n = nums.size();
-        vector<int> ans(2, -1);
         
-        int low = 0;
-        int high = n - 1;
+        int lo = 0;
+        int hi = n - 1;
         
-        while(low <= high) {
-            int mid = (low + high) / 2;
-            cout << low << " " << mid << " " << high << endl;
-        
-            
+        while(lo <= hi) {
+            int mid =  (hi + lo)/2;
             if(nums[mid] == target) {
-                ans[0] = mid;
-                high = mid - 1;
+                v[0] = mid;
+                hi = mid-1;
             }
-            else if(target < nums[mid]) {
-                high = mid - 1;
+            else if(nums[mid] < target) {
+                lo = mid + 1;
             }
             else {
-                low = mid + 1;
+                hi = mid - 1;
             }
         }
-        
-        low = 0;
-        high = n - 1;
-        
-        while(low <= high) {
-            int mid = low + (high - low) / 2;
-            
+        lo = 0;
+        hi = n - 1;
+    
+         while(lo <= hi) {
+            int mid = (hi + lo)/2;
             if(nums[mid] == target) {
-                ans[1] = mid;
-                low = mid + 1;
+                v[1] = mid;
+                lo = mid+1;
             }
-            else if(target < nums[mid]) {
-                high = mid - 1;
+            else if(nums[mid] > target) {
+                hi = mid - 1;
             }
             else {
-                low = mid + 1;
+                lo = mid + 1;
             }
         }
-        return ans;
+        return v;
     }
 };
